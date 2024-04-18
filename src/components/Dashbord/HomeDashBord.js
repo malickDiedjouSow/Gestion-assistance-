@@ -1,21 +1,21 @@
 import React from 'react'
-import PrimarySearchAppBar from './PrimarySearchAppBar'
+// import PrimarySearchAppBar from './PrimarySearchAppBar'
 import SidebarDashBord from './SidebarDashbord'
-import MainContentDashbord from './MainContentDashBord'
+//import MainContentDashbord from './MainContentDashBord'
 
 function HomeDashBord () {
   return (
     <div> 
-        <PrimarySearchAppBar/>
-            <div className="dashboard-container">
+        {/* <PrimarySearchAppBar/> */}
+            {/* <div className="dashboard-container"> */}
                 <SidebarDashBord />
         <div className="content-container">
        
-            <h1 id="special1"> HomeDashBord </h1>
-            <MainContentDashbord /> 
+            {/* <h1 id="special1"> HomeDashBord </h1> */}
+            {/* <MainContentDashbord />  */}
         </div>
     </div>
-</div>
+// </div>
 
   )
 }

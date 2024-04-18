@@ -1,5 +1,5 @@
 /* Navbar.css */
-.navbar {
+/* .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,9 +9,29 @@
   }
   
   .navbar-logo img {
-    height: 80px; /* Ajuster la hauteur du logo */
+    height: 80px;
   }
-  
+   */
+   /* Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+}
+
+.navbar-logo img {
+  width: 70px; /* Ajustez la taille du logo selon vos besoins */
+}
+
+.navbar-title {
+  text-align: center;
+  flex-grow: 1;
+  font-size: 20px;
+}
+
   .navbar-links {
     list-style: none;
     display: flex;

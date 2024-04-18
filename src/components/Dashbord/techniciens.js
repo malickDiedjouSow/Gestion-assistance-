@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import "../../assets/css/style2.css";
+import SidebarDashBord from './SidebarDashbord';
+import { Link } from 'react-router-dom';
+import '../Navbar.css'; 
+import logo from '../../assets/img/logo.png'
 
 const Techniciens = () => {
-    const [techniciens, setTechniciens] = useState([
-        { id: 1, nom: 'Doe', prenom: 'John', adresse: '123 Rue de la Liberté', motDePasse: '123456', dateAjout: '2022-04-01' },
-        { id: 2, nom: 'Smith', prenom: 'Jane', adresse: '456 Avenue des Roses', motDePasse: 'abcdef', dateAjout: '2022-04-02' },
-        { id: 3, nom: 'Johnson', prenom: 'William', adresse: '789 Boulevard du Soleil', motDePasse: 'qwerty', dateAjout: '2022-04-03' }
-    ]);
+    const [techniciens, setTechniciens] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [newTechnicien, setNewTechnicien] = useState({
         nom: "",
         prenom: "",
-        adresse: "",
-        motDePasse: "",
-        dateAjout: ""
+        email: "",
+        mot_de_passe: "",
+        date: ""
     });
 
     const handleOpenModal = () => {
@@ -36,90 +34,117 @@ const Techniciens = () => {
         }));
     };
 
-    const handleAddTechnicien = async (e) => {
-        e.preventDefault();
-        // Logique d'ajout du technicien ici
-        handleCloseModal(); // Fermer le modal après l'ajout
+    const postTechnicien = () => {
+        fetch(`http://localhost:8081/GA/techniciens/`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newTechnicien)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur de connexion au serveur');
+            }
+            return response.json();    
+
+        })
+        .then(newTechnicien => {
+            // Traiter la réponse du serveur si nécessaire
+            console.log('Technicien ajoutée avec succès:', newTechnicien);
+            alert('Technicien ajoutée avec succès:', newTechnicien);
+            window.location.reload();
+        })
+       
+        handleCloseModal(); 
     };
 
     useEffect(() => {
-        // Logique de récupération des techniciens ici
+        fetchTechniciens();
     }, []);
 
-    const handleEdit = (row) => {
-        // Logique pour l'édition
-        console.log('Éditer la ligne:', row);
-    };
-
-    const handleDelete = (id) => {
-        // Logique de suppression du technicien ici
+    const fetchTechniciens = async () => {
+        try {
+            const response = await fetch('http://localhost:8081/GA/techniciens/');
+            if (response.ok) {
+                const newTechnicien = await response.json();
+                setTechniciens(newTechnicien);
+            } else {
+                console.error('Erreur lors de la récupération des techniciens:', response.status);
+            }
+        } catch (error) {
+            console.error('Une erreur s\'est produite:', error);
+        }
     };
 
     const columns = [
+        {
+          field: 'prenom',
+          headerName: 'Prenom',
+          width: 300,
+          editable: false,
+        },
         {
             field: 'nom',
             headerName: 'Nom',
             width: 200,
             editable: false,
-        },
+          },
         {
-            field: 'prenom',
-            headerName: 'Prénom',
+            field: 'email',
+            headerName: 'Email',
             width: 200,
             editable: false,
-        },
-        {
-            field: 'adresse',
-            headerName: 'Adresse',
-            width: 300,
-            editable: false,
-        },
-        {
-            field: 'motDePasse',
-            headerName: 'Mot de passe',
+          },
+          {
+            field: 'mot_de_passe',
+            headerName: 'Mot De Passe',
             width: 200,
             editable: false,
-        },
-        {
-            field: 'dateAjout',
-            headerName: 'Date d\'ajout',
+          },
+          {
+            field: 'date',
+            headerName: 'Date',
             width: 200,
             editable: false,
-        },
-        {
-            field: 'operations',
-            width: 100,
-            sortable: false,
-            filterable: false,
-            renderCell: (row) => (
-                <div>
-                    <IconButton color='primary' onClick={() => handleEdit(row)}>
-                        <EditIcon />
-                    </IconButton>
-                    &nbsp;
-                    <IconButton color='error' onClick={() => handleDelete(row.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </div>
-            ),
-        },
+          },
+          
     ];
+    
 
     return (
         <div>
-            <div className="dashboard-container">
+           <nav className="navbar">
+      <div className="navbar-logo">
+        <Link to="/" ><img src={logo} alt="Logo" /></Link>
+      </div>
+      <ul className="navbar-links">
+        <li>
+          <Link to="/">Accueil</Link>
+        </li>
+        <li>
+          <Link to="/assistance">Assistance</Link>
+        </li>
+        <li>
+          <Link to="#">Bonjour, Malik</Link>
+        </li>
+      </ul>
+    </nav>
+            <div className="dashboard">
+                <SidebarDashBord />
                 <div className="content-container">
                     <br />
-                    <h1 id="special1"> Gestion des Techniciens
-                        <Button
-                            id="ajouterTechnicien"
-                            variant="contained"
-                            onClick={handleOpenModal}>
-                            + Ajouter Technicien
-                        </Button>
-                    </h1>
+                   <div id="center">
+                    <h1 > Gestion des Techniciens </h1>
+                   
+                    <Button
+                        id="valider13"
+                        variant="contained"
+                        onClick={handleOpenModal}>
+                        + Ajouter Technicien
+                    </Button>
+                
+                   </div>
                     <br />
-                    <Box sx={{ height: 650, width: '100%' }}>
+                    <Box sx={{ height: 650, width: '100%', border:'none' }}>
                         <DataGrid
                             rows={techniciens}
                             columns={columns}
@@ -146,17 +171,10 @@ const Techniciens = () => {
                         bgcolor: 'background.paper',
                         boxShadow: 24,
                         p: 3,
+                        
                     }}
                 >
                     <h2 id="modal-title">Ajouter un Technicien</h2>
-                    <TextField
-                        id="nom"
-                        label="Nom"
-                        variant="outlined"
-                        name='nom'
-                        onChange={handleChange}
-                    />
-                    <br />
                     <TextField
                         id="prenom"
                         label="Prénom"
@@ -164,27 +182,48 @@ const Techniciens = () => {
                         name='prenom'
                         onChange={handleChange}
                     />
-                    <br />
+                  
+                    
                     <TextField
-                        id="adresse"
-                        label="Adresse"
+                        id="nom"
+                        label="Nom"
                         variant="outlined"
-                        name='adresse'
+                        name='nom'
                         onChange={handleChange}
                     />
-                    <br />
+                    <br/>
+                    <br/>
                     <TextField
-                        id="motDePasse"
+                        id="email"
+                        label="Email"
+                        variant="outlined"
+                        name='email'
+                        onChange={handleChange}
+                    />
+                   
+                    <TextField
+                        id="mot_de_passe"
                         label="Mot de passe"
                         variant="outlined"
                         type="password"
-                        name='motDePasse'
+                        name='mot_de_passe'
+                        onChange={handleChange}
+                    />
+                    <br/>
+                    <br/>
+                    <TextField
+                        id="date"
+                        label=""
+                        variant="outlined"
+                        fullWidth
+                        type="date"
+                        name='date'
                         onChange={handleChange}
                     />
                     <br />
                     {/* Date picker pour la date d'ajout */}
                     <br />
-                    <Button id="ajouterTechnicien" variant="contained" onClick={handleAddTechnicien}>Ajouter</Button>
+                    <Button id="ajouterTechnicien" variant="contained" onClick={postTechnicien}>Ajouter</Button>
                 </Box>
             </Modal>
         </div>

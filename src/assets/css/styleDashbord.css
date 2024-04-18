@@ -15,9 +15,10 @@
     background-color: var(--uasz-vert-1);
 }
 aside {
-    background-color: #e5e3e3; 
-    width: 200px;
-    height: 88vh;
+    background-color:white; 
+    width: 250px;
+    height: 84vh;
+    /* margin-top: -1.4rem; */
     float: left;
     z-index: -9999;
 }

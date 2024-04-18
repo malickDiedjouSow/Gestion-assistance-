@@ -1,78 +1,113 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
-// import AddService from './AddService';
+import { TextField, Button, CircularProgress, Grid } from '@mui/material';
+import technicien from "../assets/img/Technicien.jpg"
 
 const FormDemande = () => {
-    const [open, setOpen] = useState(false);
-    const [idE, setIdE] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState({
         libelle: "",
-        objetDemande: ""
+        objet: "",
+        date: "", // Remplacer par la date actuelle si nécessaire
+        // user: null
     });
 
     const handleChange = evt => {
-        const value = evt.target.value;
-        setData({
-          ...data,
-          [evt.target.name]: value
-        });
+        const { name, value } = evt.target;
+        setData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
     };
 
     const postDemande = () => {
-        // Ici, vous pouvez ajouter votre logique pour gérer la soumission de la demande
-        // Par exemple, vous pouvez envoyer les données au backend ou effectuer une autre action
-        // Cette fonction est actuellement vide pour l'exemple.
-        console.log("Données de la demande:", data);
-        setOpen(true);
-        // Réinitialiser les données après la soumission
-        setData({
-            libelle: "",
-            objetDemande: ""
+        setLoading(true);
+        fetch(`http://localhost:8081/GA/demandeInterventions/`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur de connexion au serveur');
+            }
+            return response.json();    
+        })
+        .then(data => {
+            // Traiter la réponse du serveur si nécessaire
+            console.log('Demande ajoutée avec succès:', data);
+            alert("Votre demande d'assistance a été enregistrée avec succès !");
+        })
+        .catch(error => {
+            console.error("Une erreur s'est produite :", error.message);
+            alert("Une erreur s'est produite lors de l'enregistrement de la demande.");
+        })
+        .finally(() => {
+            setLoading(false);
         });
     };
 
     return (
         <div>
-            <h3> <b>Demande d'Assistance</b> </h3>
-            <div className='contenaire'>
-                <form>
-                    <TextField
-                        id="libelle"
-                        label="Libellé"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        name="libelle"
-                        value={data.libelle}
-                        required
-                    />
-                    <TextField
-                        id="objetDemande"
-                        label="Objet de la demande"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        name="objetDemande"
-                        value={data.objetDemande}
-                        required
-                    />
-                    <Button
+           <br/>
+            <Grid container spacing={6} alignItems="center">
+                <Grid item xs={4}>
+                    <img src={technicien} alt='technicien' width={450} height={550} style={{margin:"42px"}}/>
+                </Grid>
+                <Grid item xs={6}>
+                <h2><b>Demande d'Assistance</b></h2>
+                    <form>
+                        <TextField
+                            id="libelle"
+                            label="Libellé"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            onChange={handleChange}
+                            name="libelle"
+                            value={data.libelle}
+                            required
+                        />
+                        <TextField
+                            id="objet"
+                            label="Objet de la demande"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            onChange={handleChange}
+                            name="objet"
+                            value={data.objet}
+                            required
+                        />
+                        <TextField
+                            id="date"
+                            label="Date de la demande"
+                            type="datetime-local" // Utiliser "datetime-local" pour les dates et heures
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={handleChange}
+                            name="date"
+                            value={data.date}
+                            required
+                        />
+                        <Button
                         id="valider1"
                         onClick={postDemande}
                         variant="contained"
                         fullWidth
-                    >
+                    //     sx={{ mt: 7 , width:'50rem' }}
+                     >
                         Enregistrer
                     </Button>
-                </form>
-            </div>
-            {/* {
-                open && <AddService open={open} ide={idE} />
-            } */}
-        </div>
-    );
-};
-
+                    </form>
+                    </Grid>
+                    </Grid>
+                    </div>
+                   
+                    
+)
+}
 export default FormDemande;

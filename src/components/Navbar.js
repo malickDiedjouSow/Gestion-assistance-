@@ -10,17 +10,10 @@ const Navbar = () => {
       <div className="navbar-logo">
         <Link to="/" ><img src={logo} alt="Logo" /></Link>
       </div>
-      <ul className="navbar-links">
-        <li>
-          <Link to="/">Accueil</Link>
-        </li>
-        <li>
-          <Link to="/assistance">Assistance</Link>
-        </li>
-        <li>
-          <Link to="/login">Se connecter</Link>
-        </li>
-      </ul>
+    
+      <div className="navbar-title">
+        <h2>Gestion de l'Assistance aux utilisateurs</h2>
+      </div>
     </nav>
   );
 };
