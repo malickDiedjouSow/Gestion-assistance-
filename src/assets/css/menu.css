@@ -1,0 +1,85 @@
+/* ============================================== */
+@import url('./_variable.css');
+/* ============================================== */
+.header {
+    display: flex;
+    align-items: center;
+    height: 4.4rem;
+    background-color: var(--uasz-vert-1);
+    justify-content: space-between;
+}
+
+.inf {
+    background-color: rgba(255, 255, 255, 0.342);
+    border-radius: 16px;
+    padding: 0.2rem 0.7rem;
+    margin-right: 3rem;
+}
+
+.inf .MuiButtonBase-root {
+    margin: 0;
+}
+
+.logo {
+    margin-left: 2rem; 
+}
+
+.header-title {
+    color: white; 
+    font-size: 2.3rem;
+    font-weight: 600;
+    margin-right: 5rem;
+    margin-top: 1rem;
+}
+.avatar {
+    margin-left: 7cm;
+}
+.fa-icon1 {
+    font-size: 15px; 
+}
+.icon-text1 {
+    margin-left: 35px;
+}
+.icon-text2 {
+    margin-left: 55px;
+}
+.icon-text3 {
+    margin-left: 18px;
+}
+.icon-text4 {
+    margin-left: 55px;
+}
+
+
+/* ============================================== */
+.menu{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
+
+/*.menu-nav{*/
+/*    display: block;*/
+/*}*/
+
+.nav-button{
+    width: 20rem;
+    background-color: var(--uasz-vert-1);
+    color: #ffff;
+    border: none;
+    border-radius: 10px;
+    height: 3rem;
+    margin: 1rem 0rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    /* font-weight: 400; */
+}
+
+.menu-nav>button:hover{
+    /* opacity: 0.6; */
+    color: white;
+    background-color: var(--uasz-vert-2);
+    font-size: 1.4rem;
+    transition: ease 1s;
+}

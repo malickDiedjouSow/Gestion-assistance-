@@ -1,0 +1,24 @@
+/* Home.css */
+
+.acceuil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .right {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .left {
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .left img {
+    max-width: 100%;
+    height: auto;
+  }
+  
